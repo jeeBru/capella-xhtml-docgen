@@ -25,7 +25,8 @@ public class CapabilityRealizationDocGen extends org.polarsys.capella.docgen.con
 	protected final String TEXT_1 = "<h2>Involved Components</h2>";
 	protected final String TEXT_2 = NL;
 	protected final String TEXT_3 = NL + "<h2>Related Functions</h2>";
-
+	protected final String TEXT_4 = NL + "<h2>Involved Functional Chains</h2>";
+	
 	public CapabilityRealizationDocGen() {
 		//Here is the constructor
 		StringBuffer stringBuffer = new StringBuffer();
@@ -112,6 +113,17 @@ public class CapabilityRealizationDocGen extends org.polarsys.capella.docgen.con
 			stringBuffer.append(StringUtil.stringListToBulette(involvedFunctions));
 
 		}
+		
+		Collection<String> involvedFunctionalChains = CapellaCapabilityHelper.INSTANCE.getInvolvedFunctionalChains(projectName, outputFolder, (CapabilityRealization) parameter);
+
+	        if (involvedFunctionalChains.size() > 0) {
+
+        		stringBuffer.append(TEXT_4);
+           		stringBuffer.append(TEXT_2);
+            		stringBuffer.append(StringUtil.stringListToBulette(involvedFunctionalChains));
+
+        }
+		
 
 		InternalPatternContext ictx = (InternalPatternContext) ctx;
 		new Node.DataLeaf(ictx.getNode(), getClass(), "content", stringBuffer.toString());
